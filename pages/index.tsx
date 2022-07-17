@@ -62,7 +62,7 @@ const Home: NextPage = () => {
   }
   return (
     <>
-      <div className=' flex flex-grow justify-center align-middle bg-slate-50 dark:bg-slate-800 text-black dark:text-white'>
+      <div className=' flex flex-wrap justify-center align-middle bg-slate-50 dark:bg-slate-800 text-black dark:text-white'>
         <form className="m-auto" onSubmit={handleSubmit}>
           <input className="bg-slate-200 dark:bg-slate-600 text-black dark:text-white p-2 m-2 rounded-md" type="text" name="username" placeholder="GitHub Username" autoComplete='false' />
           <input className="bg-slate-200 dark:bg-slate-600 text-black dark:text-white rounded-md m-2 p-2" type="submit" value="Submit" />
