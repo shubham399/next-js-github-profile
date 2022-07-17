@@ -49,10 +49,10 @@ const Home: NextPage = () => {
           <input className="bg-slate-200 dark:bg-slate-600 text-black dark:text-white rounded-md m-2 p-2" type="submit" value="Submit" />
         </form>
         <div className='w-1/2 h-screen flex justify-center align-middle'>
-          <div className='m-auto flex-auto justify-center align-middle max-w-md rounded overflow-hidden shadow-lg bg-white mx-auto dark:bg-slate-700 text-black dark:text-white h-1/2'>
+          <div className='m-auto pt-10 flex-auto justify-between align-middle max-w-md rounded overflow-hidden shadow-lg bg-white mx-auto dark:bg-slate-700 text-black dark:text-white h-1/2 text-center'>
             {error && <div className='text-red-500'>{error}</div>}
-            <h1 className='capitalize text-xl font-Roboto'>{name}</h1>
-            <div className="group flex items-center rounded">
+            <h1 className='capitalize text-xl font-Roboto font-bold'>{name}</h1>
+            <div className="group items-center rounded">
               {githubAvatar && <Image src={githubAvatar} width="100vh" alt="github" height="100vh" />}
             </div>
             {followers && <p>Followers: {followers}</p>}
