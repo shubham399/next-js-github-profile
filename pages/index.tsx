@@ -63,32 +63,33 @@ const Home: NextPage = () => {
   return (
     <>
       <div className='flex flex-wrap justify-center align-middle h-full w-full bg-slate-50 dark:bg-slate-800 text-black dark:text-white'>
-
         <form className="m-auto" onSubmit={handleSubmit}>
           <input className="bg-slate-200 dark:bg-slate-600 text-black dark:text-white p-2 m-2 rounded-md" type="text" name="username" placeholder="GitHub Username" autoComplete='false' />
           <input className="bg-slate-200 dark:bg-slate-600 text-black dark:text-white rounded-md m-2 p-2" type="submit" value="Submit" />
         </form>
-        <div className='w-1/2 h-screen flex justify-center align-middle'>
-          <div className='m-auto p-2 flex-auto justify-between align-middle max-w-auto rounded overflow-hidden shadow-lg bg-white mx-auto dark:bg-slate-700 text-black dark:text-white h-1/2 text-center'>
-            {error && <div className='text-red-500'>{error}</div>}
-            <h1 className='capitalize text-4xl font-Lato font-bold'>{name}</h1>
-            <div className="group items-center rounded">
-              {githubAvatar && <Image src={githubAvatar} width="100vh" alt="github" height="100vh" />}
-            </div>
-            {followers && <p className='text-grey-700 dark:text-slate-200 text-sm'>Followers: {followers}</p>}
-            {following && <p className='text-grey-700 dark:text-slate-200 text-sm'>Followings: {following}</p>}
-            <div className="justify-center my-10 mx-auto overflow-hidden select-none flex flex-wrap">
-              {repos.map((repo: string, index: number) => {
-                return (<button key={index} className="shadow-md no-underline rounded-full font-semibold text-sm mr-2">{repo}</button>)
-              })}
-            </div>
-          </div>
-        </div>
-
-        {/* <Image src={(githubAvatar || "/doesnot")} alt="Vercel Logo" width={72} height={16} /> */}
+        <Card error={error} name={name} avatar={githubAvatar} followers={followers} following={following} repos={repos} />
       </div>
     </>
   )
+}
+
+const Card = ({ error, name, avatar, followers, following, repos }: any) => {
+  return (<div className='w-1/2 h-screen flex justify-center align-middle'>
+    <div className='m-auto p-2 flex-auto justify-between align-middle max-w-auto rounded overflow-hidden shadow-lg bg-white mx-auto dark:bg-slate-700 text-black dark:text-white h-1/2 text-center'>
+      {error && <div className='text-red-500'>{error}</div>}
+      <h1 className='capitalize text-4xl font-Lato font-bold'>{name}</h1>
+      <div className="group items-center rounded">
+        {avatar && <Image src={avatar} width="100vh" alt="github" height="100vh" />}
+      </div>
+      {followers && <p className='text-grey-700 dark:text-slate-200 text-sm'>Followers: {followers}</p>}
+      {following && <p className='text-grey-700 dark:text-slate-200 text-sm'>Followings: {following}</p>}
+      <div className="justify-center my-10 mx-auto overflow-hidden select-none flex flex-wrap">
+        {repos.map((repo: string, index: number) => {
+          return (<button key={index} className="shadow-md no-underline rounded-full font-semibold text-sm mr-2">{repo}</button>)
+        })}
+      </div>
+    </div>
+  </div>)
 }
 
 export default Home
