@@ -69,7 +69,7 @@ const Home: NextPage = () => {
         <div className='w-1/2 h-screen flex justify-center align-middle'>
           <div className='m-auto p-2 flex-auto justify-between align-middle max-w-auto rounded overflow-hidden shadow-lg bg-white mx-auto dark:bg-slate-700 text-black dark:text-white h-1/2 text-center'>
             {error && <div className='text-red-500'>{error}</div>}
-            <h1 className='capitalize text-xl font-Roboto font-bold'>{name}</h1>
+            <h1 className='capitalize text-4xl font-Lato font-bold'>{name}</h1>
             <div className="group items-center rounded">
               {githubAvatar && <Image src={githubAvatar} width="100vh" alt="github" height="100vh" />}
             </div>
