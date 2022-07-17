@@ -14,6 +14,7 @@ const Home: NextPage = () => {
   const [error, setError] = useState<null | string>(null);
   const [repos, setRepos] = useState([]);
   const fetchRepos = (username: string) => {
+    setRepos([]);
     fetch(`https://api.github.com/users/${username}/repos`)
       .then(res => res.json())
       .then(data => {
@@ -31,6 +32,7 @@ const Home: NextPage = () => {
       });
   }
   const setUser = (username: string) => {
+    setError(null);
     const URI = `https://api.github.com/users/${username}`;
     fetch(URI)
       .then(res => res.json())
