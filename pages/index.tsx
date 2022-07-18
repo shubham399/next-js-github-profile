@@ -13,8 +13,21 @@ const Home: NextPage = () => {
   const [following, setFollowing] = useState<null | number>(null);
   const [error, setError] = useState<null | string>(null);
   const [repos, setRepos] = useState([]);
+
   const fetchRepos = (username: string) => {
     setRepos([]);
+    if (localStorage.getItem(`LAST_UPDATED:${username}`)) {
+      const lastUpdated = new Date(localStorage.getItem(`LAST_UPDATED:${username}`) as string);
+      const now = new Date().getTime();
+      // if lastUpdated at is older than 24 hours, fetch new data
+      if (now - lastUpdated.getTime() > 86400000) {
+        // fetch latest repo data
+        localStorage.removeItem(`REPO:${username}`);
+    }
+    if (`REPO:${username}` in localStorage) {
+      return setRepos(JSON.parse(localStorage.getItem(`REPO:${username}`) as string));
+    }
+    localStorage.setItem(`LAST_UPDATED:${username}`, new Date().toISOString());
     fetch(`https://api.github.com/users/${username}/repos`)
       .then(res => res.json())
       .then(data => {
@@ -22,9 +35,8 @@ const Home: NextPage = () => {
           //@ts-ignore
           .sort((a: any, b: any) => new Date(b.pushed_at) - new Date(a.pushed_at))
           .map((repo: any) => repo.name).slice(0, 5);
-
-        console.log(data)
         setRepos(data);
+        localStorage.setItem(`REPO:${username}`, JSON.stringify(data));
       })
       .catch(err => {
         setError("No Repo found")
@@ -33,6 +45,15 @@ const Home: NextPage = () => {
   }
   const setUser = (username: string) => {
     setError(null);
+    if (`USER:${username}` in localStorage) {
+      const user = JSON.parse(localStorage.getItem(`USER:${username}`) as string);
+      setName(user.name);
+      setFollowers(user.followers);
+      setFollowing(user.following);
+      setGitHubAvatar(user.avatar_url);
+      fetchRepos(username);
+      return;
+    }
     const URI = `https://api.github.com/users/${username}`;
     fetch(URI)
       .then(res => res.json())
@@ -41,6 +62,7 @@ const Home: NextPage = () => {
         setGitHubAvatar(data.avatar_url);
         setFollowing(data.following);
         setFollowers(data.followers);
+        localStorage.setItem(`USER:${username}`, JSON.stringify(data));
       })
       .catch(err => {
         setError("User not found")
