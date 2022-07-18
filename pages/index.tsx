@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import styles from '../styles/Home.module.css'
-
+const MAX_REPOS=10;
 
 const Home: NextPage = () => {
   const [githubAvatar, setGitHubAvatar] = useState<null | string>(null);
@@ -35,7 +35,7 @@ const Home: NextPage = () => {
         data = data.filter((repo: any) => repo.fork === false && repo.archived === false)
           //@ts-ignore
           .sort((a: any, b: any) => new Date(b.pushed_at) - new Date(a.pushed_at))
-          .map((repo: any) => repo.name).slice(0, 5);
+          .map((repo: any) => repo.name).slice(0, MAX_REPOS);
         setRepos(data);
         localStorage.setItem(`REPO:${username}`, JSON.stringify(data));
       })
