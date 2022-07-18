@@ -62,7 +62,7 @@ const Home: NextPage = () => {
   }
   return (
     <>
-      <div className=' flex flex-wrap justify-center align-middle bg-slate-50 dark:bg-slate-800 text-black dark:text-white'>
+      <div className='flex flex-wrap justify-center align-middle bg-slate-50 dark:bg-slate-800 text-black dark:text-white'>
         <form className="m-auto" onSubmit={handleSubmit}>
           <input className="bg-slate-200 dark:bg-slate-600 text-black dark:text-white p-2 m-2 rounded-md" type="text" name="username" placeholder="GitHub Username" autoComplete='false' />
           <input className="bg-slate-200 dark:bg-slate-600 text-black dark:text-white rounded-md m-2 p-2" type="submit" value="Submit" />
@@ -80,8 +80,8 @@ const Home: NextPage = () => {
 }
 
 const Card = ({ error, name, avatar, followers, following, repos }: any) => {
-  return (<div className='w-1/2 h-screen flex justify-center align-middle'>
-    <div className='m-auto p-2 flex-auto justify-between align-middle max-w-auto rounded overflow-hidden shadow-lg bg-white mx-auto dark:bg-slate-700 text-black dark:text-white h-1/2 text-center'>
+  return (<div className='w-full md:w-1/2 h-screen flex justify-center align-middle'>
+    <div className='mx-4 my-4 sm:mx-1 p-2 flex-auto justify-between align-middle max-w-auto max-h-md rounded overflow-hidden shadow-lg bg-white dark:bg-slate-700 text-black dark:text-white text-center'>
       {error && <div className='text-red-500'>{error}</div>}
       <h1 className='capitalize text-4xl font-Lato font-bold'>{name}</h1>
       <div className="group items-center rounded">
