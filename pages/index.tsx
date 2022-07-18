@@ -7,7 +7,7 @@ import styles from '../styles/Home.module.css'
 
 const Home: NextPage = () => {
   const [githubAvatar, setGitHubAvatar] = useState<null | string>(null);
-  const responseDiv = useRef();
+  const [publicRepos,setPublicRepos]   = useState<number>(100);
   const [name, setName] = useState<null | string>(null);
   const [followers, setFollowers] = useState<null | number>(null);
   const [following, setFollowing] = useState<null | number>(null);
@@ -23,12 +23,13 @@ const Home: NextPage = () => {
       if (now - lastUpdated.getTime() > 86400000) {
         // fetch latest repo data
         localStorage.removeItem(`REPO:${username}`);
+      }
     }
     if (`REPO:${username}` in localStorage) {
       return setRepos(JSON.parse(localStorage.getItem(`REPO:${username}`) as string));
     }
     localStorage.setItem(`LAST_UPDATED:${username}`, new Date().toISOString());
-    fetch(`https://api.github.com/users/${username}/repos`)
+    fetch(`https://api.github.com/users/${username}/repos?per_page=${publicRepos}`)
       .then(res => res.json())
       .then(data => {
         data = data.filter((repo: any) => repo.fork === false && repo.archived === false)
@@ -62,6 +63,7 @@ const Home: NextPage = () => {
         setGitHubAvatar(data.avatar_url);
         setFollowing(data.following);
         setFollowers(data.followers);
+        setPublicRepos(data.public_repos);
         localStorage.setItem(`USER:${username}`, JSON.stringify(data));
       })
       .catch(err => {
@@ -120,4 +122,4 @@ const Card = ({ error, name, avatar, followers, following, repos }: any) => {
   </div>)
 }
 
-export default Home
+export default Home;
