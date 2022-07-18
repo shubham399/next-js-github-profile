@@ -3,11 +3,11 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import styles from '../styles/Home.module.css'
-const MAX_REPOS=10;
+const MAX_REPOS = 10;
 
 const Home: NextPage = () => {
   const [githubAvatar, setGitHubAvatar] = useState<null | string>(null);
-  const [publicRepos,setPublicRepos]   = useState<number>(100);
+  const [publicRepos, setPublicRepos] = useState<number>(100);
   const [name, setName] = useState<null | string>(null);
   const [followers, setFollowers] = useState<null | number>(null);
   const [following, setFollowing] = useState<null | number>(null);
@@ -35,7 +35,8 @@ const Home: NextPage = () => {
         data = data.filter((repo: any) => repo.fork === false && repo.archived === false)
           //@ts-ignore
           .sort((a: any, b: any) => new Date(b.pushed_at) - new Date(a.pushed_at))
-          .map((repo: any) => repo.name).slice(0, MAX_REPOS);
+          .map((repo: any) => { return { name: repo.name, html_url: repo.html_url } }).slice(0, MAX_REPOS);
+        console.log(data)
         setRepos(data);
         localStorage.setItem(`REPO:${username}`, JSON.stringify(data));
       })
@@ -114,8 +115,9 @@ const Card = ({ error, name, avatar, followers, following, repos }: any) => {
       {followers && <p className='text-grey-700 dark:text-slate-200 text-sm'>Followers: {followers}</p>}
       {following && <p className='text-grey-700 dark:text-slate-200 text-sm'>Followings: {following}</p>}
       <div className="justify-center my-10 mx-auto overflow-hidden select-none flex flex-wrap">
-        {repos.map((repo: string, index: number) => {
-          return (<button key={index} className="shadow-md no-underline rounded-full font-semibold text-sm mr-2">{repo}</button>)
+        {repos.map((repo: any, index: number) => {
+          console.log(repo)
+          return (<a key={index} className="shadow-md no-underline rounded-full font-semibold text-sm mr-2" href={repo.html_url} target="_blank" rel="noopener nofollow noreferrer">{repo.name}</a>)
         })}
       </div>
     </div>
